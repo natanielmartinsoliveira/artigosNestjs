@@ -35,6 +35,8 @@ src/
 ├── auth/ # Módulo de autenticação (JWT, Guards, Decorators)
 ├── users/ # Usuários e permissões
 ├── articles/ # CRUD de artigos
+├── common/ # guard e jwt
+├── permissions/ # permissões
 ├── app.module.ts # Módulo raiz
 ├── main.ts # Bootstrap da aplicação
 ```
