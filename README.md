@@ -30,14 +30,14 @@ O projeto está preparado para rodar em **Docker**, com banco de dados PostgreSQ
 ---
 
 ## 🧩 Estrutura de Pastas
-
+```bash
 src/
 ├── auth/ # Módulo de autenticação (JWT, Guards, Decorators)
 ├── users/ # Usuários e permissões
 ├── articles/ # CRUD de artigos
 ├── app.module.ts # Módulo raiz
 ├── main.ts # Bootstrap da aplicação
-
+```
 
 ---
 
