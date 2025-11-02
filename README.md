@@ -71,6 +71,7 @@ docker-compose up --build
 A API estará disponível em:
 👉 http://localhost:3000
 
+---
 
 # Endpoints Principais
 
@@ -94,6 +95,7 @@ POST /auth/login
   "access_token": "jwt_token_aqui"
 }
 ```
+---
 
 # 👤 Usuários
 
@@ -103,6 +105,8 @@ POST /auth/login
 | `POST`   | `/users`     | Público   | Cria um usuário         |
 | `PATCH`  | `/users/:id` | Admin     | Atualiza usuário        |
 | `DELETE` | `/users/:id` | Admin     | Remove usuário          |
+
+---
 
 # 📝 Artigos
 
@@ -122,6 +126,7 @@ Authorization: Bearer <token>
   "content": "Conteúdo do artigo"
 }
 ```
+---
 
 # 🔑 Papéis e Permissões
 
@@ -131,6 +136,7 @@ Authorization: Bearer <token>
 | **Editor** | Criar / Editar / Ler |
 | **Reader** | Somente leitura      |
 
+---
 
 🧰 Comandos úteis
 
@@ -143,10 +149,13 @@ Authorization: Bearer <token>
 | `npm run migration:run`      | Executa migrations                        |
 | `docker-compose up --build`  | Roda tudo via Docker                      |
 
+---
+
 🧑‍💻 Autor
 
 Nataniel Oliveira ✨
 
+---
 
 🪶 Licença
 
