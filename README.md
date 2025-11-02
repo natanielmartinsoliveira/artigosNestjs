@@ -1,99 +1,157 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🧠 NestJS Headless API — JWT Auth & Roles
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST construída com **NestJS**, **TypeORM** e **JWT Authentication**, com sistema completo de **usuários, permissões e artigos**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+O projeto está preparado para rodar em **Docker**, com banco de dados PostgreSQL e autenticação baseada em **token JWT**.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🚀 Tecnologias
 
-## Project setup
+- [NestJS](https://nestjs.com/)
+- [TypeORM](https://typeorm.io/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Passport JWT](https://docs.nestjs.com/security/authentication)
+- [Docker](https://www.docker.com/)
+- [bcrypt](https://www.npmjs.com/package/bcrypt)
 
+---
+
+## ⚙️ Funcionalidades
+
+✅ Cadastro, login e autenticação de usuários  
+✅ Controle de permissões por função (Admin, Editor, Reader)  
+✅ Criação, listagem, atualização e exclusão de artigos  
+✅ Proteção de rotas com Guards (`JwtAuthGuard` e `RolesGuard`)  
+✅ Estrutura modular (Users, Auth, Articles)  
+✅ Configuração via variáveis de ambiente  
+✅ Totalmente compatível com Docker e TypeORM Migrations
+
+---
+
+## 🧩 Estrutura de Pastas
+
+src/
+├── auth/ # Módulo de autenticação (JWT, Guards, Decorators)
+├── users/ # Usuários e permissões
+├── articles/ # CRUD de artigos
+├── app.module.ts # Módulo raiz
+├── main.ts # Bootstrap da aplicação
+
+
+---
+
+## 🐳 Rodando com Docker
+
+### 1️⃣ Clone o repositório
 ```bash
-$ npm install
+git clone https://github.com/natanielmartinsoliveira/artigosNestjs.git
+cd artigosNestjs
+
 ```
 
-## Compile and run the project
+## Crie um arquivo .env na raiz:
+
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=nestjs_articles
+
+JWT_SECRET=my_super_secret
+JWT_EXPIRATION_TIME=86400
+
+3️⃣ Suba os containers
+
+docker-compose up --build
+
+
+A API estará disponível em:
+👉 http://localhost:3000
+
+
+# Endpoints Principais
+
+## 🔐 Autenticação
+
+| Método | Rota             | Descrição            |
+| ------ | ---------------- | -------------------- |
+| `POST` | `/auth/register` | Cria um novo usuário |
+| `POST` | `/auth/login`    | Retorna um token JWT |
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+POST /auth/login
+{
+  "email": "admin@example.com",
+  "password": "123456"
+}
 ```
-
-## Run tests
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+{
+  "access_token": "jwt_token_aqui"
+}
 ```
 
-## Deployment
+# 👤 Usuários
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+| Método   | Rota         | Permissão | Descrição               |
+| -------- | ------------ | --------- | ----------------------- |
+| `GET`    | `/users`     | Admin     | Lista todos os usuários |
+| `POST`   | `/users`     | Público   | Cria um usuário         |
+| `PATCH`  | `/users/:id` | Admin     | Atualiza usuário        |
+| `DELETE` | `/users/:id` | Admin     | Remove usuário          |
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+# 📝 Artigos
+
+| Método   | Rota            | Permissão      | Descrição       |
+| -------- | --------------- | -------------- | --------------- |
+| `GET`    | `/articles`     | Todos          | Lista artigos   |
+| `POST`   | `/articles`     | Admin / Editor | Cria artigo     |
+| `PATCH`  | `/articles/:id` | Admin / Editor | Atualiza artigo |
+| `DELETE` | `/articles/:id` | Admin          | Remove artigo   |
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+POST /articles
+Authorization: Bearer <token>
+
+{
+  "title": "Meu primeiro artigo",
+  "content": "Conteúdo do artigo"
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+# 🔑 Papéis e Permissões
 
-## Resources
+| Role       | Acesso               |
+| ---------- | -------------------- |
+| **Admin**  | Total                |
+| **Editor** | Criar / Editar / Ler |
+| **Reader** | Somente leitura      |
 
-Check out a few resources that may come in handy when working with NestJS:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+🧰 Comandos úteis
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+| Comando                      | Descrição                                 |
+| ---------------------------- | ----------------------------------------- |
+| `npm run start:dev`          | Inicia o servidor em modo desenvolvimento |
+| `npm run build`              | Compila o projeto                         |
+| `npm run migration:generate` | Gera uma nova migration                   |
+| `npm run migration:run`      | Executa migrations                        |
+| `docker-compose up --build`  | Roda tudo via Docker                      |
 
-## Stay in touch
+🧑‍💻 Autor
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Nataniel Oliveira ✨
 
-## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-# artigosNestjs
+🪶 Licença
+
+Este projeto está sob a licença MIT — sinta-se livre para usar e modificar.
+
+
+---
+
+Quer que eu **adicione os comandos de migration** e configuração do `docker-compose.yml` (para incluir o Postgres + NestJS já rodando juntos) no final do README também?  
+Posso deixar o arquivo completo com seções “🧱 Setup do Banco” e “🔄 Migrations automáticas”.
