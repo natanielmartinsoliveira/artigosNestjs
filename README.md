@@ -152,8 +152,4 @@ Nataniel Oliveira ✨
 
 Este projeto está sob a licença MIT — sinta-se livre para usar e modificar.
 
-
 ---
-
-Quer que eu **adicione os comandos de migration** e configuração do `docker-compose.yml` (para incluir o Postgres + NestJS já rodando juntos) no final do README também?  
-Posso deixar o arquivo completo com seções “🧱 Setup do Banco” e “🔄 Migrations automáticas”.
